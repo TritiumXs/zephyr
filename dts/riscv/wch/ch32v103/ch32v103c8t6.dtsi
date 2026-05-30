@@ -1,0 +1,20 @@
+/*
+ * Copyright (c) 2024 Lucy Wong
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include <wch/ch32v103/ch32v103.dtsi>
+
+&sram0 {
+	reg = <0x20000000 DT_SIZE_K(20)>;
+};
+
+&flash0 {
+	reg = <0x08000000 DT_SIZE_K(64)>;
+	ranges = <0x0 0x08000000 DT_SIZE_K(64)>;
+};
+
+&cpu0 {
+	clock-frequency = <DT_FREQ_M(72)>;
+};
