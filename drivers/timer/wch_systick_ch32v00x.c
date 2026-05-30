@@ -33,7 +33,11 @@ static void ch32v00x_systick_irq(const void *unused)
 {
 	ARG_UNUSED(unused);
 
+#if defined(CONFIG_SOC_SERIES_QINGKE_V3A)
+	SYSTICK->CTLR &= ~STK_CNTIF;
+#else
 	SYSTICK->SR = 0;
+#endif
 	ch32v00x_systick_count += CYCLES_PER_TICK; /* Track cycles. */
 	sys_clock_announce(1);                     /* Poke the scheduler. */
 }
@@ -52,7 +56,11 @@ static int ch32v00x_systick_init(void)
 {
 	IRQ_CONNECT(DT_INST_IRQN(0), 0, ch32v00x_systick_irq, NULL, 0);
 
+#if defined(CONFIG_SOC_SERIES_QINGKE_V3A)
+	SYSTICK->CTLR &= ~STK_CNTIF;
+#else
 	SYSTICK->SR = 0;
+#endif
 	SYSTICK->CMP = CYCLES_PER_TICK;
 	SYSTICK->CNT = 0;
 	SYSTICK->CTLR = STK_STRE | STK_STCLK | STK_STIE | STK_STE;
