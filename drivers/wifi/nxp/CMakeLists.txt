@@ -176,6 +176,35 @@ zephyr_code_relocate(FILES ${ZEPHYR_BASE}/subsys/net/ip/ipv6.c
                      FILTER "${NXP_IPV6_FILTER}"
                      LOCATION ${QUICK_ACCESS_CODE_AREA} NOKEEP)
 
+# IPV6 FRAGMENT
+string(JOIN "" NXP_IPV6_FRAG_FILTER
+       ".*\\.net_ipv6_handle_fragment_hdr|"
+       ".*\\.net_ipv6_send_fragmented_pkt|"
+       ".*\\.send_ipv6_fragment|"
+       ".*\\.reassemble_packet|"
+       ".*\\.reassembly_get|"
+       ".*\\.fragments_are_ready|"
+       ".*\\.shift_packets"
+)
+zephyr_code_relocate(FILES ${ZEPHYR_BASE}/subsys/net/ip/ipv6_fragment.c
+                     FILTER "${NXP_IPV6_FRAG_FILTER}"
+                     LOCATION RAM_TEXT NOKEEP)
+
+# IPV4 FRAGMENT
+string(JOIN "" NXP_IPV4_FRAG_FILTER
+       ".*\\.net_ipv4_handle_fragment_hdr|"
+       ".*\\.net_ipv4_prepare_for_send_fragment|"
+       ".*\\.net_ipv4_send_fragmented_pkt|"
+       ".*\\.send_ipv4_fragment|"
+       ".*\\.reassemble_packet|"
+       ".*\\.reassembly_get|"
+       ".*\\.fragments_are_ready|"
+       ".*\\.shift_packets"
+)
+zephyr_code_relocate(FILES ${ZEPHYR_BASE}/subsys/net/ip/ipv4_fragment.c
+                     FILTER "${NXP_IPV4_FRAG_FILTER}"
+                     LOCATION RAM_TEXT NOKEEP)
+
 string(JOIN "" NXP_NET_CONTEXT_FILTER
        ".*\\.context_sendto|"
        ".*\\.context_setup_udp_packet|"
@@ -195,6 +224,7 @@ zephyr_code_relocate(FILES ${ZEPHYR_BASE}/subsys/net/ip/net_context.c
                      LOCATION ${QUICK_ACCESS_CODE_AREA} NOKEEP)
 
 string(JOIN "" NXP_UTILS_FILTER
+       ".*\\.calc_chksum|"
        ".*\\.net_calc_chksum|"
        ".*\\.net_calc_chksum_ipv4|"
        ".*\\.net_calc_chksum_udp|"
@@ -219,6 +249,19 @@ string(JOIN "" NXP_ETHERNET_FILTER
 )
 zephyr_code_relocate(FILES ${ZEPHYR_BASE}/subsys/net/l2/ethernet/ethernet.c
                      FILTER "${NXP_ETHERNET_FILTER}"
+                     LOCATION ${QUICK_ACCESS_CODE_AREA} NOKEEP)
+
+string(JOIN "" NXP_ARP_FILTER
+       ".*\\.net_arp_prepare|"
+       ".*\\.arp_prepare|"
+       ".*\\.arp_entry_find_move_first|"
+       ".*\\.arp_entry_find_pending|"
+       ".*\\.arp_entry_get_free|"
+       ".*\\.arp_entry_get_last_from_table|"
+       ".*\\.arp_entry_find_pending"
+)
+zephyr_code_relocate(FILES ${ZEPHYR_BASE}/subsys/net/l2/ethernet/arp.c
+                     FILTER "${NXP_ARP_FILTER}"
                      LOCATION ${QUICK_ACCESS_CODE_AREA} NOKEEP)
 
 zephyr_code_relocate(FILES
