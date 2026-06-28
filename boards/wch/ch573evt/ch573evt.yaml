@@ -1,0 +1,15 @@
+identifier: ch573evt
+name: WCH CH573 Evaluation Board
+type: mcu
+arch: riscv
+toolchain:
+  - cross-compile
+  - zephyr
+ram: 18
+flash: 448
+supported:
+  - gpio
+  - uart
+  - spi
+  - usb-device
+  - ble

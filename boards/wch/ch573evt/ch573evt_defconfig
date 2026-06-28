@@ -1,0 +1,6 @@
+# Copyright (c) 2026 Lucy Wong
+# SPDX-License-Identifier: Apache-2.0
+
+CONFIG_SOC_CH573=y
+CONFIG_BOARD_CH573EVT=y
+CONFIG_SYS_CLOCK_HW_CYCLES_PER_SEC=60000000

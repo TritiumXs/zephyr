@@ -1,0 +1,156 @@
+/*
+ * Copyright (c) 2026 Lucy Wong
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#include <freq.h>
+#include <mem.h>
+#include <wch/qingke-v3a.dtsi>
+#include <zephyr/dt-bindings/gpio/gpio.h>
+#include <zephyr/dt-bindings/clock/ch573-clocks.h>
+
+/ {
+	soc {
+		/* SRAM: 0x20003800-0x20007FFF (18KB) */
+		sram0: memory@20003800 {
+			compatible = "mmio-sram";
+			reg = <0x20003800 DT_SIZE_K(18)>;
+		};
+
+		/* Flash: 0x00000000, CodeFlash 448KB */
+		flash0: flash@0 {
+			compatible = "soc-nv-flash";
+			reg = <0x00000000 DT_SIZE_K(448)>;
+		};
+
+		/* SYS/PMU/RTC/GPIO base: 0x40001000 */
+		rcc: rcc@40001000 {
+			compatible = "wch,ch573-rcc";
+			reg = <0x40001000 0x100>;
+			#clock-cells = <1>;
+			status = "okay";
+		};
+
+		/* GPIO: PA 22 pins total, split PA/PB */
+		gpioa: gpio@40001000 {
+			compatible = "wch,gpio";
+			reg = <0x40001000 0x20>;
+			gpio-controller;
+			#gpio-cells = <2>;
+			ngpios = <16>;
+			interrupt-parent = <&pfic>;
+			interrupts = <17>;
+			clocks = <&rcc CH573_CLOCK_GPIOA>;
+			status = "disabled";
+		};
+
+		gpiob: gpio@40001020 {
+			compatible = "wch,gpio";
+			reg = <0x40001020 0x20>;
+			gpio-controller;
+			#gpio-cells = <2>;
+			ngpios = <24>;
+			interrupt-parent = <&pfic>;
+			interrupts = <18>;
+			clocks = <&rcc CH573_CLOCK_GPIOB>;
+			status = "disabled";
+		};
+
+		uart0: uart@40003000 {
+			compatible = "wch,usart";
+			reg = <0x40003000 0x10>;
+			interrupt-parent = <&pfic>;
+			interrupts = <26>;
+			clocks = <&rcc CH573_CLOCK_UART0>;
+			status = "disabled";
+		};
+
+		uart1: uart@40003400 {
+			compatible = "wch,usart";
+			reg = <0x40003400 0x10>;
+			interrupt-parent = <&pfic>;
+			interrupts = <27>;
+			clocks = <&rcc CH573_CLOCK_UART1>;
+			status = "disabled";
+		};
+
+		uart2: uart@40003800 {
+			compatible = "wch,usart";
+			reg = <0x40003800 0x10>;
+			interrupt-parent = <&pfic>;
+			interrupts = <33>;
+			clocks = <&rcc CH573_CLOCK_UART2>;
+			status = "disabled";
+		};
+
+		uart3: uart@40003c00 {
+			compatible = "wch,usart";
+			reg = <0x40003c00 0x10>;
+			interrupt-parent = <&pfic>;
+			interrupts = <34>;
+			clocks = <&rcc CH573_CLOCK_UART3>;
+			status = "disabled";
+		};
+
+		spi0: spi@40004000 {
+			compatible = "wch,spi";
+			reg = <0x40004000 0x20>;
+			interrupt-parent = <&pfic>;
+			interrupts = <19>;
+			clocks = <&rcc CH573_CLOCK_SPI0>;
+			status = "disabled";
+			#address-cells = <1>;
+			#size-cells = <0>;
+		};
+
+		tmr0: timer@40002000 {
+			compatible = "wch,gptm";
+			reg = <0x40002000 0x40>;
+			interrupt-parent = <&pfic>;
+			interrupts = <16>;
+			clocks = <&rcc CH573_CLOCK_TMR0>;
+			status = "disabled";
+		};
+
+		tmr1: timer@40002400 {
+			compatible = "wch,gptm";
+			reg = <0x40002400 0x40>;
+			interrupt-parent = <&pfic>;
+			interrupts = <24>;
+			clocks = <&rcc CH573_CLOCK_TMR1>;
+			status = "disabled";
+		};
+
+		tmr2: timer@40002800 {
+			compatible = "wch,gptm";
+			reg = <0x40002800 0x40>;
+			interrupt-parent = <&pfic>;
+			interrupts = <25>;
+			clocks = <&rcc CH573_CLOCK_TMR2>;
+			status = "disabled";
+		};
+
+		tmr3: timer@40002c00 {
+			compatible = "wch,gptm";
+			reg = <0x40002c00 0x40>;
+			interrupt-parent = <&pfic>;
+			interrupts = <32>;
+			clocks = <&rcc CH573_CLOCK_TMR3>;
+			status = "disabled";
+		};
+
+		usb: usb@40008000 {
+			compatible = "wch,usb";
+			reg = <0x40008000 0x100>;
+			interrupt-parent = <&pfic>;
+			interrupts = <22>;
+			clocks = <&rcc CH573_CLOCK_USB>;
+			status = "disabled";
+		};
+	};
+};
+
+&cpu0 {
+	clock-frequency = <DT_FREQ_M(60)>;
+};

@@ -1,0 +1,28 @@
+/*
+ * Copyright (c) 2026 Lucy Wong
+ *
+ * SPDX-License-Identifier: Apache-2.0
+ */
+
+#ifndef ZEPHYR_INCLUDE_DT_BINDINGS_CLOCK_CH573_CLOCKS_H_
+#define ZEPHYR_INCLUDE_DT_BINDINGS_CLOCK_CH573_CLOCKS_H_
+
+/* SYS/PMU/RTC/GPIO base: 0x40001000 */
+#define CH573_CLOCK_SYS     0
+#define CH573_CLOCK_GPIOA   1
+#define CH573_CLOCK_GPIOB   2
+
+/* Peripheral clocks */
+#define CH573_CLOCK_TMR0    3
+#define CH573_CLOCK_TMR1    4
+#define CH573_CLOCK_TMR2    5
+#define CH573_CLOCK_TMR3    6
+#define CH573_CLOCK_UART0   7
+#define CH573_CLOCK_UART1   8
+#define CH573_CLOCK_UART2   9
+#define CH573_CLOCK_UART3   10
+#define CH573_CLOCK_SPI0    11
+#define CH573_CLOCK_PWMX    12
+#define CH573_CLOCK_USB     13
+
+#endif /* ZEPHYR_INCLUDE_DT_BINDINGS_CLOCK_CH573_CLOCKS_H_ */

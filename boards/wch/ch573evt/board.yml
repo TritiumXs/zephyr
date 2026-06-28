@@ -1,0 +1,6 @@
+board:
+  name: ch573evt
+  full_name: WCH CH573EVT
+  vendor: wch
+  socs:
+    - name: ch573
